@@ -18,6 +18,7 @@ function formatCurrency(n: number) {
 export default function DonationCalculator() {
   const [kg, setKg] = useState<string>("307")
   const [roundUp, setRoundUp] = useState<boolean>(true)
+  const [showPopup, setShowPopup] = useState(false)
 
   const { exact, suggested } = useMemo(() => {
     const parsed = Number.parseFloat(kg)
@@ -69,16 +70,9 @@ export default function DonationCalculator() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3">
-          <Button className="flex-1" asChild>
-            <a
-              href="https://www.iowavalleyhabitat.org/donate.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Donate on iowavalleyhabitat.org and designate For Solar Projects"
-            >
-              Donate now
-              <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-            </a>
+          <Button className="flex-1" onClick={() => setShowPopup(true)}>
+            Donate now
+            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
           </Button>
           <Button variant="outline" className="flex-1 bg-transparent" asChild>
             <a
@@ -91,8 +85,34 @@ export default function DonationCalculator() {
           </Button>
         </div>
 
+        {showPopup && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg max-w-md mx-4 space-y-4">
+              <h3 className="font-semibold text-lg">Important Note</h3>
+              <p className="text-sm text-muted-foreground">
+                Be sure to enter a note that your donation is for the habitat solar fund. In the future, there will be
+                an added option to the dropdown.
+              </p>
+              <div className="flex gap-3">
+                <Button
+                  onClick={() => {
+                    setShowPopup(false)
+                    window.open("https://build.iowavalleyhabitat.org/checkout/5390", "_blank", "noopener,noreferrer")
+                  }}
+                  className="flex-1"
+                >
+                  OK, Continue to Donate
+                </Button>
+                <Button variant="outline" onClick={() => setShowPopup(false)} className="flex-1">
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <p className="text-xs text-muted-foreground">
-          This tool uses the assumption that $0.22 invested in Iowa solar offsets 1 kg CO2 over 25 years. It’s an
+          This tool uses the assumption that $0.22 invested in Iowa solar offsets 1 kg CO₂ over 25 years. It’s an
           approximation, not a certified offset.
         </p>
       </CardContent>
