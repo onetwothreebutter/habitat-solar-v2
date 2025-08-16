@@ -39,6 +39,17 @@ export default function DonationCalculator() {
         </div>
       </CardHeader>
       <CardContent className="grid gap-5">
+        {/* Add the "First calculate your emissions" button above the emissions input field */}
+        <Button variant="outline" className="w-full bg-transparent" asChild>
+          <a
+            href="https://www.icao.int/environmental-protection/CarbonOffset"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            First calculate your emissions
+          </a>
+        </Button>
+
         <div className="grid gap-2">
           <Label htmlFor="kg">Emissions in kilograms (kg CO2)</Label>
           <Input
@@ -69,21 +80,11 @@ export default function DonationCalculator() {
           <div className="text-3xl font-bold tabular-nums">{formatCurrency(suggested)}</div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Button className="flex-1" onClick={() => setShowPopup(true)}>
-            Donate now
-            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-          </Button>
-          <Button variant="outline" className="flex-1 bg-transparent" asChild>
-            <a
-              href="https://www.icao.int/environmental-protection/CarbonOffset"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Open ICAO calculator
-            </a>
-          </Button>
-        </div>
+        {/* Update the button layout - the "Donate now" button should be full width at the bottom */}
+        <Button className="w-full" onClick={() => setShowPopup(true)}>
+          Donate now
+          <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+        </Button>
 
         {showPopup && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
