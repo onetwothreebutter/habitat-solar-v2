@@ -3,16 +3,12 @@
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, Home, Leaf, Plane } from "lucide-react"
-import { useState } from "react"
-
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 import DonationCalculator from "@/components/donation-calculator"
 
 export default function ClientPage() {
-  const [showPopup, setShowPopup] = useState(false)
-
   return (
     <main className="min-h-dvh">
       <header className="border-b">
@@ -48,9 +44,11 @@ export default function ClientPage() {
               families.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button size="lg" onClick={() => setShowPopup(true)}>
-                Donate now
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+              <Button size="lg" asChild>
+                <a href="https://build.iowavalleyhabitat.org/checkout/5390" target="_blank" rel="noopener noreferrer">
+                  Donate now
+                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                </a>
               </Button>
               <Button size="lg" variant="outline" asChild>
                 <a href="#calculator">Calculate your offset</a>
@@ -128,32 +126,6 @@ export default function ClientPage() {
           </div>
         </div>
       </section>
-
-      {showPopup && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg max-w-md mx-4 space-y-4">
-            <h3 className="font-semibold text-lg">Important Note</h3>
-            <p className="text-sm text-muted-foreground">
-              Be sure to enter a note that your donation is for the habitat solar fund. In the future, there will be an
-              added option to the dropdown.
-            </p>
-            <div className="flex gap-3">
-              <Button
-                onClick={() => {
-                  setShowPopup(false)
-                  window.open("https://build.iowavalleyhabitat.org/checkout/5390", "_blank", "noopener,noreferrer")
-                }}
-                className="flex-1"
-              >
-                OK, Continue to Donate
-              </Button>
-              <Button variant="outline" onClick={() => setShowPopup(false)} className="flex-1">
-                Cancel
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
 
       <footer className="border-t">
         <div className="mx-auto max-w-6xl px-4 py-10 text-sm text-muted-foreground">
