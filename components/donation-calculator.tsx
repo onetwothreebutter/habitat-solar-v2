@@ -20,7 +20,9 @@ export default function DonationCalculator() {
   const [roundUp, setRoundUp] = useState<boolean>(true)
 
   const { exact, suggested } = useMemo(() => {
-    const parsed = Number.parseFloat(kg)
+    // Remove commas to support formats like "1,234" or "1,234.56"
+    const sanitized = kg.replace(/,/g, "")
+    const parsed = Number.parseFloat(sanitized)
     const exactDonation = isFinite(parsed) && parsed > 0 ? parsed * PRICE_PER_KG : 0
     const suggestedDonation = roundUp ? Math.ceil(exactDonation) : exactDonation
     return { exact: exactDonation, suggested: suggestedDonation }
