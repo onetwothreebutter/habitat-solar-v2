@@ -1,12 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { ArrowRight, Home, Leaf, Plane } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 import DonationCalculator from "@/components/donation-calculator"
+import SimpleOffsetCalculator from "@/components/simple-offset-calculator"
 
 export default function ClientPage() {
   return (
@@ -31,8 +31,8 @@ export default function ClientPage() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-emerald-50 to-white" />
-        <div className="mx-auto max-w-6xl px-4 py-12 md:py-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          <div className="space-y-6">
+        <div className="mx-auto max-w-6xl px-4 py-12 md:py-16 grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+          <div className="space-y-6 lg:col-span-3">
             <h1 className="text-3xl md:text-5xl font-bold leading-tight">
               Want to offset CO₂ from a flight and help an Iowa family?
             </h1>
@@ -51,21 +51,16 @@ export default function ClientPage() {
                 </a>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <a href="#calculator">Calculate your offset</a>
+                <a href="#calculator">Full calculator</a>
               </Button>
             </div>
             <p className="text-xs text-muted-foreground">
               Offset‑equivalent based on local solar production and 25‑year panel lifetime assumptions.
             </p>
           </div>
-          <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border bg-white">
-            <Image
-              src="/iowa-solar-rooftop.png"
-              alt="Rooftop solar panels on a sunny day"
-              fill
-              className="object-cover"
-              priority
-            />
+          <div className="space-y-3 lg:col-span-2">
+            <h2 className="text-lg font-semibold">Calculate your offset</h2>
+            <SimpleOffsetCalculator />
           </div>
         </div>
       </section>
