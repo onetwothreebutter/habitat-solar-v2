@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       origin: origin.toUpperCase(),
       destination: destination.toUpperCase(),
-      kgCO2,
+      emissionsKg: kgCO2,
       modelVersion: data.modelVersion,
     })
   } catch (error) {
