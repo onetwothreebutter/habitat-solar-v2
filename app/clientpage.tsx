@@ -58,15 +58,6 @@ export default function ClientPage() {
             </p>
           </div>
         </div>
-            <p className="text-xs text-muted-foreground">
-              Offset‑equivalent based on local solar production and 25‑year panel lifetime assumptions.
-            </p>
-          </div>
-          <div className="space-y-3 lg:col-span-2">
-            <h2 className="text-lg font-semibold">Calculate your offset</h2>
-            <SimpleOffsetCalculator />
-          </div>
-        </div>
       </section>
 
       {/* How it works */}
