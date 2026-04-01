@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 import DonationCalculator from "@/components/donation-calculator"
-import SimpleOffsetCalculator from "@/components/simple-offset-calculator"
 
 export default function ClientPage() {
   return (
@@ -31,15 +30,15 @@ export default function ClientPage() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-emerald-50 to-white" />
-        <div className="mx-auto max-w-6xl px-4 py-12 md:py-16 grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-          <div className="space-y-6 lg:col-span-3">
+<div className="mx-auto max-w-6xl px-4 py-12 md:py-16">
+          <div className="space-y-6 max-w-3xl">
             <h1 className="text-3xl md:text-5xl font-bold leading-tight">
               Want to offset CO₂ from a flight and help an Iowa family?
             </h1>
             <p className="text-muted-foreground text-base md:text-lg">
               You can compensate for CO₂ emissions from flights or other carbon‑intensive activities by funding local
-              solar installations for Iowa Valley Habitat for Humanity homes. These homes are built “solar‑ready,” but
-              most homeowners can’t afford the upfront cost of a solar array. Your donation makes these systems
+              solar installations for Iowa Valley Habitat for Humanity homes. These homes are built "solar‑ready," but
+              most homeowners can't afford the upfront cost of a solar array. Your donation makes these systems
               possible—reducing carbon emissions for the lifetime of the panels and lowering energy bills for low‑income
               families.
             </p>
@@ -51,9 +50,14 @@ export default function ClientPage() {
                 </a>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <a href="#calculator">Full calculator</a>
+                <a href="#calculator">Calculate your offset</a>
               </Button>
             </div>
+            <p className="text-xs text-muted-foreground">
+              Offset‑equivalent based on local solar production and 25‑year panel lifetime assumptions.
+            </p>
+          </div>
+        </div>
             <p className="text-xs text-muted-foreground">
               Offset‑equivalent based on local solar production and 25‑year panel lifetime assumptions.
             </p>
