@@ -168,17 +168,6 @@ export default function DonationCalculator() {
         </Tabs>
 
         <div className="border-t pt-4 space-y-4">
-          <div className="grid gap-2">
-            <Label htmlFor="kg-display">Emissions (kg CO2)</Label>
-            <Input
-              id="kg-display"
-              inputMode="decimal"
-              placeholder="e.g., 307"
-              value={kg}
-              onChange={(e) => setKg(e.target.value)}
-            />
-          </div>
-
           <div className="flex items-center justify-between rounded-md border p-3">
             <div className="space-y-0.5">
               <div className="text-sm font-medium">Round up to the nearest dollar</div>
