@@ -50,7 +50,7 @@ export default function SimpleOffsetCalculator() {
         return
       }
 
-      setKg(data.kgCO2.toString())
+      setKg(Math.round(data.emissionsKg).toString())
     } catch {
       setError("Failed to connect to emissions service")
     } finally {
