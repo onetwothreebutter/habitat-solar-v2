@@ -142,7 +142,7 @@ export default function DonationCalculator() {
           <TabsContent value="manual" className="space-y-4 mt-4">
             <Button variant="outline" className="w-full bg-transparent" asChild>
               <a
-                href="https://www.icao.int/environmental-protection/CarbonOffset"
+                href="https://icec.icao.int/calculator"
                 target="_blank"
                 rel="noopener noreferrer"
               >

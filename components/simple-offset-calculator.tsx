@@ -159,7 +159,7 @@ export default function SimpleOffsetCalculator() {
             <p className="text-xs text-muted-foreground">
               Don&apos;t know your emissions?{" "}
               <a
-                href="https://www.icao.int/environmental-protection/CarbonOffset"
+                href="https://icec.icao.int/calculator"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline underline-offset-2 hover:text-foreground"
