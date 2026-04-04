@@ -57,7 +57,7 @@ function useAnimatedNumber(value: number, duration: number = 500) {
 
 export default function DonationCalculator() {
   const [kg, setKg] = useState<string>("307")
-  const [roundUp, setRoundUp] = useState<boolean>(true)
+  const [roundUp, setRoundUp] = useState<boolean>(false)
   
   // Flight lookup state
   const [origin, setOrigin] = useState("")
