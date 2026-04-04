@@ -56,7 +56,7 @@ function useAnimatedNumber(value: number, duration: number = 500) {
 }
 
 export default function DonationCalculator() {
-  const [kg, setKg] = useState<string>("307")
+  const [kg, setKg] = useState<string>("")
   const [roundUp, setRoundUp] = useState<boolean>(false)
   
   // Flight lookup state
@@ -64,6 +64,7 @@ export default function DonationCalculator() {
   const [destination, setDestination] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [hasCalculated, setHasCalculated] = useState(false)
 
   const { exact, suggested } = useMemo(() => {
     const sanitized = kg.replace(/,/g, "")
@@ -101,6 +102,7 @@ export default function DonationCalculator() {
       }
 
       setKg(Math.round(data.emissionsKg).toString())
+      setHasCalculated(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to calculate emissions")
     } finally {
@@ -175,7 +177,7 @@ export default function DonationCalculator() {
               )}
             </Button>
 
-            {kg && origin && destination && (
+            {hasCalculated && kg && origin && destination && (
               <div className="rounded-lg bg-emerald-50 p-3">
                 <div className="text-sm font-medium text-emerald-800">
                   {origin.toUpperCase()} → {destination.toUpperCase()}
