@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect, useRef } from "react"
 import { ArrowRight, Calculator, Plane, Loader2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -16,15 +16,55 @@ function formatCurrency(n: number) {
   return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(isFinite(n) ? n : 0)
 }
 
+function useAnimatedNumber(value: number, duration: number = 500) {
+  const [displayValue, setDisplayValue] = useState(value)
+  const previousValue = useRef(value)
+  const animationRef = useRef<number>()
+
+  useEffect(() => {
+    const startValue = previousValue.current
+    const endValue = value
+    const startTime = performance.now()
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      
+      // Ease out cubic for smooth deceleration
+      const easeOut = 1 - Math.pow(1 - progress, 3)
+      const current = startValue + (endValue - startValue) * easeOut
+      
+      setDisplayValue(current)
+
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate)
+      } else {
+        previousValue.current = endValue
+      }
+    }
+
+    animationRef.current = requestAnimationFrame(animate)
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
+    }
+  }, [value, duration])
+
+  return displayValue
+}
+
 export default function DonationCalculator() {
-  const [kg, setKg] = useState<string>("307")
-  const [roundUp, setRoundUp] = useState<boolean>(true)
+  const [kg, setKg] = useState<string>("")
+  const [roundUp, setRoundUp] = useState<boolean>(false)
   
   // Flight lookup state
   const [origin, setOrigin] = useState("")
   const [destination, setDestination] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [hasCalculated, setHasCalculated] = useState(false)
 
   const { exact, suggested } = useMemo(() => {
     const sanitized = kg.replace(/,/g, "")
@@ -33,6 +73,8 @@ export default function DonationCalculator() {
     const suggestedDonation = roundUp ? Math.ceil(exactDonation) : exactDonation
     return { exact: exactDonation, suggested: suggestedDonation }
   }, [kg, roundUp])
+
+  const animatedSuggested = useAnimatedNumber(suggested)
 
   const lookupFlightEmissions = async () => {
     if (!origin || !destination) {
@@ -60,6 +102,7 @@ export default function DonationCalculator() {
       }
 
       setKg(Math.round(data.emissionsKg).toString())
+      setHasCalculated(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to calculate emissions")
     } finally {
@@ -133,6 +176,17 @@ export default function DonationCalculator() {
                 "Calculate Flight Emissions"
               )}
             </Button>
+
+            {hasCalculated && kg && origin && destination && (
+              <div className="rounded-lg bg-emerald-50 p-3">
+                <div className="text-sm font-medium text-emerald-800">
+                  {origin.toUpperCase()} → {destination.toUpperCase()}
+                </div>
+                <div className="text-lg font-bold text-emerald-700 tabular-nums">
+                  {Number(kg.replace(/,/g, "")).toLocaleString()} kg CO2
+                </div>
+              </div>
+            )}
             
             <p className="text-xs text-muted-foreground">
               Uses Google Travel Impact Model API. Enter 3-letter IATA airport codes (e.g., ORD, LAX, JFK).
@@ -142,7 +196,7 @@ export default function DonationCalculator() {
           <TabsContent value="manual" className="space-y-4 mt-4">
             <Button variant="outline" className="w-full bg-transparent" asChild>
               <a
-                href="https://www.icao.int/environmental-protection/CarbonOffset"
+                href="https://icec.icao.int/calculator"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -180,7 +234,7 @@ export default function DonationCalculator() {
 
           <div className="grid gap-1">
             <div className="text-sm text-muted-foreground">Your estimated donation</div>
-            <div className="text-3xl font-bold tabular-nums">{formatCurrency(suggested)}</div>
+            <div className="text-3xl font-bold tabular-nums">{formatCurrency(Math.round(animatedSuggested * 100) / 100)}</div>
           </div>
 
           <Button className="w-full" asChild>

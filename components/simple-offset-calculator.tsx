@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect, useRef } from "react"
 import { ArrowRight, Plane, Loader2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -13,6 +13,45 @@ function formatCurrency(n: number) {
   return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(
     isFinite(n) ? n : 0
   )
+}
+
+function useAnimatedNumber(value: number, duration: number = 500) {
+  const [displayValue, setDisplayValue] = useState(value)
+  const previousValue = useRef(value)
+  const animationRef = useRef<number>()
+
+  useEffect(() => {
+    const startValue = previousValue.current
+    const endValue = value
+    const startTime = performance.now()
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      
+      // Ease out cubic for smooth deceleration
+      const easeOut = 1 - Math.pow(1 - progress, 3)
+      const current = startValue + (endValue - startValue) * easeOut
+      
+      setDisplayValue(current)
+
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate)
+      } else {
+        previousValue.current = endValue
+      }
+    }
+
+    animationRef.current = requestAnimationFrame(animate)
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
+    }
+  }, [value, duration])
+
+  return displayValue
 }
 
 export default function SimpleOffsetCalculator() {
@@ -29,6 +68,8 @@ export default function SimpleOffsetCalculator() {
     const exact = isFinite(parsed) && parsed > 0 ? parsed * PRICE_PER_KG : 0
     return Math.ceil(exact)
   }, [kg])
+
+  const animatedDonation = useAnimatedNumber(donation)
 
   const lookupFlight = async () => {
     if (!origin || !destination) return
@@ -159,7 +200,7 @@ export default function SimpleOffsetCalculator() {
             <p className="text-xs text-muted-foreground">
               Don&apos;t know your emissions?{" "}
               <a
-                href="https://www.icao.int/environmental-protection/CarbonOffset"
+                href="https://icec.icao.int/calculator"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline underline-offset-2 hover:text-foreground"
@@ -170,14 +211,24 @@ export default function SimpleOffsetCalculator() {
           </div>
         )}
 
-        {donation > 0 && (
+        {kg && (
           <div className="rounded-lg bg-emerald-50 p-4">
-            <div className="text-sm text-muted-foreground">
-              {kg && mode === "flight" && origin && destination
-                ? `${origin} → ${destination}: ${kg} kg CO2`
-                : `${kg} kg CO2`}
+            <div className="text-sm font-medium text-emerald-800">
+              {mode === "flight" && origin && destination
+                ? `${origin} → ${destination}`
+                : "Your emissions"}
             </div>
-            <div className="text-2xl font-bold text-emerald-700">{formatCurrency(donation)}</div>
+            <div className="text-xl font-bold text-emerald-700 tabular-nums">
+              {Number(kg.replace(/,/g, "")).toLocaleString()} kg CO2
+            </div>
+            {donation > 0 && (
+              <div className="mt-2 pt-2 border-t border-emerald-200">
+                <div className="text-sm text-muted-foreground">Suggested donation</div>
+                <div className="text-2xl font-bold text-emerald-700 tabular-nums">
+                  {formatCurrency(Math.round(animatedDonation))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
