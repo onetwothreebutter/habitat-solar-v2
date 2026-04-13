@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { AirportCombobox } from "@/components/airport-combobox"
 
 const PRICE_PER_KG = 0.22
 
@@ -134,25 +135,21 @@ export default function DonationCalculator() {
           <TabsContent value="flight" className="space-y-4 mt-4">
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
-                <Label htmlFor="origin-full">From (airport code)</Label>
-                <Input
+                <Label htmlFor="origin-full">From</Label>
+                <AirportCombobox
                   id="origin-full"
-                  placeholder="ORD"
                   value={origin}
-                  onChange={(e) => setOrigin(e.target.value)}
-                  maxLength={3}
-                  className="uppercase"
+                  onChange={setOrigin}
+                  placeholder="Origin airport"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="destination-full">To (airport code)</Label>
-                <Input
+                <Label htmlFor="destination-full">To</Label>
+                <AirportCombobox
                   id="destination-full"
-                  placeholder="LAX"
                   value={destination}
-                  onChange={(e) => setDestination(e.target.value)}
-                  maxLength={3}
-                  className="uppercase"
+                  onChange={setDestination}
+                  placeholder="Destination airport"
                 />
               </div>
             </div>
@@ -161,9 +158,9 @@ export default function DonationCalculator() {
               <p className="text-sm text-destructive">{error}</p>
             )}
             
-            <Button 
-              onClick={lookupFlightEmissions} 
-              disabled={isLoading || !origin || !destination}
+            <Button
+              onClick={lookupFlightEmissions}
+              disabled={isLoading || origin.length !== 3 || destination.length !== 3}
               variant="outline"
               className="w-full"
             >
@@ -189,7 +186,7 @@ export default function DonationCalculator() {
             )}
             
             <p className="text-xs text-muted-foreground">
-              Uses Google Travel Impact Model API. Enter 3-letter IATA airport codes (e.g., ORD, LAX, JFK).
+              Uses Google Travel Impact Model API. Search by city, airport name, or IATA code.
             </p>
           </TabsContent>
           

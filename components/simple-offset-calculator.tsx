@@ -6,6 +6,7 @@ import { ArrowRight, Plane, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { AirportCombobox } from "@/components/airport-combobox"
 
 const PRICE_PER_KG = 0.22
 
@@ -136,38 +137,31 @@ export default function SimpleOffsetCalculator() {
                 <Label htmlFor="origin" className="text-sm font-medium">
                   From
                 </Label>
-                <Input
+                <AirportCombobox
                   id="origin"
-                  placeholder="ORD"
                   value={origin}
-                  onChange={(e) => setOrigin(e.target.value.toUpperCase())}
-                  maxLength={3}
-                  className="uppercase"
+                  onChange={setOrigin}
+                  placeholder="Origin airport"
                 />
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="destination" className="text-sm font-medium">
                   To
                 </Label>
-                <Input
+                <AirportCombobox
                   id="destination"
-                  placeholder="LAX"
                   value={destination}
-                  onChange={(e) => setDestination(e.target.value.toUpperCase())}
-                  maxLength={3}
-                  className="uppercase"
+                  onChange={setDestination}
+                  placeholder="Destination airport"
                 />
               </div>
             </div>
-            <p className="text-xs text-muted-foreground">
-              Enter 3-letter IATA airport codes (e.g., ORD, LAX, JFK)
-            </p>
             <Button
               type="button"
               variant="secondary"
               className="w-full"
               onClick={lookupFlight}
-              disabled={loading || origin.length !== 3 || destination.length !== 3}
+              disabled={loading || origin.length < 3 || destination.length < 3}
             >
               {loading ? (
                 <>
