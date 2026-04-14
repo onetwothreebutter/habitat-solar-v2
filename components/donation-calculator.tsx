@@ -58,8 +58,8 @@ function useAnimatedNumber(value: number, duration: number = 500) {
 
 export default function DonationCalculator() {
   const [kg, setKg] = useState<string>("")
-  const [roundUp, setRoundUp] = useState<boolean>(false)
-  
+  const [roundUp, setRoundUp] = useState<boolean>(true)
+
   // Flight lookup state
   const [origin, setOrigin] = useState("")
   const [destination, setDestination] = useState("")
@@ -67,15 +67,15 @@ export default function DonationCalculator() {
   const [error, setError] = useState<string | null>(null)
   const [hasCalculated, setHasCalculated] = useState(false)
 
-  const { exact, suggested } = useMemo(() => {
+  const { exact, suggested, display } = useMemo(() => {
     const sanitized = kg.replace(/,/g, "")
     const parsed = Number.parseFloat(sanitized)
     const exactDonation = isFinite(parsed) && parsed > 0 ? parsed * PRICE_PER_KG : 0
-    const suggestedDonation = roundUp ? Math.ceil(exactDonation) : exactDonation
-    return { exact: exactDonation, suggested: suggestedDonation }
+    const suggestedDonation = Math.ceil(exactDonation)
+    return { exact: exactDonation, suggested: suggestedDonation, display: roundUp ? suggestedDonation : exactDonation }
   }, [kg, roundUp])
 
-  const animatedSuggested = useAnimatedNumber(suggested)
+  const animatedSuggested = useAnimatedNumber(display)
 
   const lookupFlightEmissions = async () => {
     if (!origin || !destination) {
