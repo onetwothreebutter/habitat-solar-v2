@@ -119,7 +119,11 @@ export default function ClientPage() {
 
       <footer className="border-t">
         <div className="mx-auto max-w-6xl px-4 py-10 text-sm text-muted-foreground">
-          Thank you for supporting clean energy and local families in Johnson County.
+          <p>Thank you for supporting clean energy and local families in Johnson County.</p>
+          <p className="mt-2">
+            Habitat Solar is a project from Iowa City chapter of Citizens&apos; Climate Lobby / Iowa
+            City Climate Advocates
+          </p>
         </div>
       </footer>
     </main>
