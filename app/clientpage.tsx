@@ -18,7 +18,7 @@ export default function ClientPage() {
           </div>
           <div className="flex items-center gap-2">
             <Button asChild>
-              <Link href="https://www.iowavalleyhabitat.org/" target="_blank" rel="noopener noreferrer">
+              <Link href="https://bit.ly/IVHFHgreen" target="_blank" rel="noopener noreferrer">
                 Visit IVHFH
                 <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
               </Link>
