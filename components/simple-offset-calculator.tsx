@@ -228,7 +228,7 @@ export default function SimpleOffsetCalculator() {
 
         <Button className="w-full" disabled={donation === 0} asChild={donation > 0}>
           {donation > 0 ? (
-            <a href="https://build.iowavalleyhabitat.org/checkout/5390" target="_blank" rel="noopener noreferrer">
+            <a href="https://bit.ly/habitatbuildsgreen" target="_blank" rel="noopener noreferrer">
               Donate {formatCurrency(donation)}
               <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
             </a>

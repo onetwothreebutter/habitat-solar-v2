@@ -44,7 +44,7 @@ export default function ClientPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Button size="lg" asChild>
-                <a href="https://build.iowavalleyhabitat.org/checkout/5390" target="_blank" rel="noopener noreferrer">
+                <a href="https://bit.ly/habitatbuildsgreen" target="_blank" rel="noopener noreferrer">
                   Donate now
                   <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </a>
