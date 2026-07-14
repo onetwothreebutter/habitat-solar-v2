@@ -19,7 +19,7 @@ export default function ClientPage() {
           <div className="flex items-center gap-2">
             <Button asChild>
               <Link href="https://bit.ly/IVHFHgreen" target="_blank" rel="noopener noreferrer">
-                Visit IVHFH
+                Iowa Valley Habitat
                 <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
               </Link>
             </Button>
