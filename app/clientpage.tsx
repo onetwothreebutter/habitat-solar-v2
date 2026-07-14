@@ -18,8 +18,8 @@ export default function ClientPage() {
           </div>
           <div className="flex items-center gap-2">
             <Button asChild>
-              <Link href="https://www.iowavalleyhabitat.org/" target="_blank" rel="noopener noreferrer">
-                Visit IVHFH
+              <Link href="https://bit.ly/IVHFHgreen" target="_blank" rel="noopener noreferrer">
+                Iowa Valley Habitat
                 <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
               </Link>
             </Button>
@@ -44,7 +44,7 @@ export default function ClientPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Button size="lg" asChild>
-                <a href="https://build.iowavalleyhabitat.org/checkout/5390" target="_blank" rel="noopener noreferrer">
+                <a href="https://bit.ly/habitatbuildsgreen" target="_blank" rel="noopener noreferrer">
                   Donate now
                   <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </a>
@@ -119,7 +119,11 @@ export default function ClientPage() {
 
       <footer className="border-t">
         <div className="mx-auto max-w-6xl px-4 py-10 text-sm text-muted-foreground">
-          Thank you for supporting clean energy and local families in Johnson County.
+          <p>Thank you for supporting clean energy and local families in Johnson County.</p>
+          <p className="mt-2">
+            Habitat Solar is a project from Iowa City chapter of Citizens&apos; Climate Lobby / Iowa
+            City Climate Advocates
+          </p>
         </div>
       </footer>
     </main>
